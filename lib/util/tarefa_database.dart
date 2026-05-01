@@ -2,7 +2,7 @@ import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart' as sqlite;
 import 'package:app_tarefas/models/model.dart';
 
-class Database {
+class TarefaDatabase {
   static Future<sqlite.Database> _getDB() async {
     final databasePath = await sqlite.getDatabasesPath();
 

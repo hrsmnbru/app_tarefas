@@ -1,4 +1,11 @@
+import 'package:app_tarefas/util/rotas.dart';
+import 'package:app_tarefas/providers/tarefa_provider.dart';
+import 'package:app_tarefas/views/tela_tarefas.dart';
+import 'package:app_tarefas/views/tela_detalhes.dart';
+import 'package:app_tarefas/views/tela_adicionar.dart';
+import 'package:app_tarefas/views/tela_editar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +28,7 @@ class MyApp extends StatelessWidget {
           Rotas.telaAdicionar: (context) => const TelaAdicionar(titulo: 'Adicionar Tarefa'),
           Rotas.telaEditar: (context) => const TelaEditar(titulo: 'Editar Tarefa'),
         },
+    )
     );
   }
 }
