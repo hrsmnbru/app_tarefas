@@ -16,6 +16,7 @@ class Tarefa implements Model {
   //final String sucessoraId;
 
   Tarefa({
+    int? id,
     required this.titulo,
     required this.descricao,
     required this.dataPrevista,
@@ -26,7 +27,7 @@ class Tarefa implements Model {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      if(id != null) 'id': id,
       'titulo': titulo,
       'descricao': descricao,
       'dataPrevista': dataPrevista.toIso8601String(),
@@ -42,6 +43,7 @@ class Tarefa implements Model {
 
   factory Tarefa.fromMap(Map<String, dynamic> map) {
     var tarefa = Tarefa(
+      id: map['id'] as int?,
       titulo: map['titulo'] as String,
       descricao: map['descricao'] as String,
       dataPrevista: DateTime.parse(map['dataPrevista'] as String),

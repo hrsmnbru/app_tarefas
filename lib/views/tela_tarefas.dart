@@ -1,5 +1,6 @@
 import 'package:app_tarefas/providers/tarefa_provider.dart';
 import 'package:app_tarefas/util/rotas.dart';
+import 'package:app_tarefas/widgets/tarefa_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,48 +12,31 @@ class TelaTarefas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<TarefaProvider>(context);
-    provider.carregarTarefas();
+    var tarefas = provider.tarefas;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(titulo, style: const TextStyle(color: Colors.white)),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      body: ListView.builder(
-        itemCount: provider.tarefas.length,
-        itemBuilder: (context, index) {
-          final tarefa = provider.tarefas[index];
-          return Card(
-            elevation: 3,
-            color: Colors.lightBlue[200],
-            child: ListTile(
-              title: Text(
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                tarefa.titulo,
-              ),
-              leading: Text(style: const TextStyle(fontSize: 20), "id: ${tarefa.id}"),
-              trailing: IconButton(
-                onPressed: () => provider.removeTarefa(tarefa.id!), 
-                icon: Icon(Icons.delete, color: Colors.red[400],)
-              ),
-              subtitle: Text(tarefa.descricao),
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  Rotas.telaDetalhes,
-                  arguments: tarefa,
-                );
-              },
-            ),
-          );
-        },
-      ),
+
+      body: tarefas.isEmpty
+        ? const Center(child: Text('Nenhuma tarefa encontrada.'))
+        : ListView.builder(
+            itemCount: provider.tarefas.length,
+            itemBuilder: (context, index) {
+              final tarefa = provider.tarefas[index];
+              return TarefaCard(
+                tarefa: tarefa,
+                onTap: () => Navigator.pushNamed(context, Rotas.telaDetalhes, arguments: tarefa.id),
+                onDelete: () => provider.removeTarefa(tarefa.id!),
+              );
+            },
+          ),
+
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.pushNamed(context, Rotas.telaAdicionar);
-        },
-        tooltip: 'adicionar tarefa',
-        child: const Icon(Icons.add_box_rounded),
+        onPressed: () => Navigator.pushNamed(context, Rotas.telaAdicionar),
+        child: const Icon(Icons.add),
       )
     );
   }
