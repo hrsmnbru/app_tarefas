@@ -5,8 +5,32 @@ class DeleteIcon extends StatelessWidget {
 
   const DeleteIcon({super.key, this.onDelete});
 
-  void _confirmarDelete(BuildContext context){
-    //implementar logica mensagem confirmar exclusão
+  void _confirmarDelete(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Excluir tarefa'),
+        content: const Text('Tem certeza que deseja excluir esta tarefa?'),
+        actions: [
+          TextButton(
+            child: const Text('Cancelar'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+
+          TextButton(
+            child: const Text('Confirmar'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              if (onDelete != null) {
+                onDelete!();
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -14,7 +38,7 @@ class DeleteIcon extends StatelessWidget {
     return IconButton(
       icon: Icon(Icons.remove),
       color: Theme.of(context).colorScheme.error,
-      onPressed: onDelete,
+      onPressed: onDelete != null ? () => _confirmarDelete(context) : null,
     );
   }
 }
