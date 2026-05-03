@@ -101,7 +101,7 @@ class _TarefaFormState extends State<TarefaForm>{
               },
             ),
 
-            TextFormField(
+            /*TextFormField(
               //initialValue: _dataPrevista.toIso8601String().substring(0,10), //SUBSTITUIÇÃO POR API SHOWDATEPICKER
               groupId: ListTile(
                 title: const Text('Data Prevista'),
@@ -116,6 +116,13 @@ class _TarefaFormState extends State<TarefaForm>{
               onSaved: (value){
                 _dataPrevista = DateTime.parse(value!);
               },
+            ),*/
+
+            ListTile(
+              title: const Text('Data Prevista'),
+              subtitle: Text('${_dataPrevista.day}/${_dataPrevista.month}/${_dataPrevista.year}'),
+              trailing: const Icon(Icons.calendar_today),
+              onTap: () => _selecionarData(context),
             ),
 
             SwitchListTile(
