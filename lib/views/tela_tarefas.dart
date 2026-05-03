@@ -3,6 +3,7 @@ import 'package:app_tarefas/util/rotas.dart';
 import 'package:app_tarefas/widgets/tarefa_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TelaTarefas extends StatelessWidget {
   final String titulo;
@@ -20,24 +21,30 @@ class TelaTarefas extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
 
-      body: tarefas.isEmpty
-        ? const Center(child: Text('Nenhuma tarefa encontrada.'))
-        : ListView.builder(
-            itemCount: provider.tarefas.length,
-            itemBuilder: (context, index) {
-              final tarefa = provider.tarefas[index];
-              return TarefaCard(
-                tarefa: tarefa,
-                onTap: () => Navigator.pushNamed(context, Rotas.telaDetalhes, arguments: tarefa.id),
-                onDelete: () => provider.removeTarefa(tarefa.id!),
-              );
-            },
-          ),
+      body: SlidableAutoCloseBehavior(
+        child: tarefas.isEmpty
+            ? const Center(child: Text('Nenhuma tarefa encontrada.'))
+            : ListView.builder(
+                itemCount: provider.tarefas.length,
+                itemBuilder: (context, index) {
+                  final tarefa = provider.tarefas[index];
+                  return TarefaCard(
+                    tarefa: tarefa,
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      Rotas.telaDetalhes,
+                      arguments: tarefa.id,
+                    ),
+                    onDelete: () => provider.removeTarefa(tarefa.id!),
+                  );
+                },
+              ),
+      ),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, Rotas.telaAdicionar),
         child: const Icon(Icons.add),
-      )
+      ),
     );
   }
 }

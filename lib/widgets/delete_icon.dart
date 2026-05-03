@@ -5,6 +5,10 @@ class DeleteIcon extends StatelessWidget {
 
   const DeleteIcon({super.key, this.onDelete});
 
+  void _confirmarDelete(BuildContext context){
+    //implementar logica mensagem confirmar exclusão
+  }
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
