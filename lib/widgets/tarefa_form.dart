@@ -50,6 +50,21 @@ class _TarefaFormState extends State<TarefaForm>{
     widget.onSalvar(tarefa);
   }
 
+  //método para mostrar o DatePicker
+  Future<void> _selecionarData(BuildContext context) async {
+    final DateTime? dataSelecionada = await showDatePicker(
+      context: context,
+      initialDate: _dataPrevista,
+      firstDate: DateTime(2026, 1, 1),
+      lastDate: DateTime(2100),
+    );
+    if (dataSelecionada != null && dataSelecionada != _dataPrevista) {
+      setState(() {
+        _dataPrevista = dataSelecionada;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context){
     final colors = Theme.of(context).colorScheme;
@@ -87,7 +102,13 @@ class _TarefaFormState extends State<TarefaForm>{
             ),
 
             TextFormField(
-              initialValue: _dataPrevista.toIso8601String().substring(0,10),
+              //initialValue: _dataPrevista.toIso8601String().substring(0,10), //SUBSTITUIÇÃO POR API SHOWDATEPICKER
+              groupId: ListTile(
+                title: const Text('Data Prevista'),
+                subtitle: Text('${_dataPrevista.day}/${_dataPrevista.month}/${_dataPrevista.year}'),
+                trailing: const Icon(Icons.calendar_today),
+                onTap: () => _selecionarData(context),
+              ),
               decoration: const InputDecoration(
                 labelText: 'Data Prevista',
                 border: OutlineInputBorder(), 
