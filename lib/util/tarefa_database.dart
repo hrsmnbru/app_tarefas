@@ -16,10 +16,11 @@ class TarefaDatabase {
             CREATE TABLE Tarefa(
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               titulo TEXT NOT NULL,
-              descricao TEXT NOT NULL,
+              descricao TEXT,
               dataPrevista TEXT NOT NULL,
               importante INTEGER NOT NULL,
-              realizada INTEGER NOT NULL
+              realizada INTEGER NOT NULL,
+              categoria TEXT DEFAULT 'pessoal'
             )
           ''');
         },

@@ -43,7 +43,16 @@ class TelaTarefas extends StatelessWidget {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, Rotas.telaAdicionar),
-        child: const Icon(Icons.add),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: const Icon(
+          Icons.add,
+          size: 30,
+          color: Colors.white,
+          ),
       ),
     );
   }

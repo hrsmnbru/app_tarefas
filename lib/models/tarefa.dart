@@ -1,3 +1,4 @@
+import 'package:app_tarefas/models/categoria.dart';
 import 'package:app_tarefas/models/model.dart';
 
 class Tarefa implements Model {
@@ -11,7 +12,7 @@ class Tarefa implements Model {
   //possiveis atributos
   //final DateTime? dataRealizada;
   //final List<Subtarefa> subtarefas;
-  //final String? categoria;
+  final Categoria categoria;
   //final String predecessoraId;
   //final String sucessoraId;
 
@@ -22,6 +23,7 @@ class Tarefa implements Model {
     required this.dataPrevista,
     this.importante = false,
     this.realizada = false,
+    this.categoria = Categoria.pessoal,
   });
 
   @override
@@ -33,6 +35,7 @@ class Tarefa implements Model {
       'dataPrevista': dataPrevista.toIso8601String(),
       'importante': importante ? 1 : 0,
       'realizada': realizada ? 1 : 0,
+      'categoria': categoria.name,
     };
   }
 
@@ -49,6 +52,10 @@ class Tarefa implements Model {
       dataPrevista: DateTime.parse(map['dataPrevista'] as String),
       importante: map['importante'] == 0 ? false : true,
       realizada: map['realizada'] == 0 ? false : true,
+      categoria: Categoria.values.firstWhere(
+        (cat) => cat.name == map['categoria'],
+        orElse: () => Categoria.pessoal,
+      ),
     );
     tarefa.id = map['id'] as int;
     return tarefa;
@@ -62,7 +69,8 @@ class Tarefa implements Model {
         'descricao: $descricao, '
         'dataPrevista: $dataPrevista, '
         'importante: $importante, '
-        'realizada: $realizada}';
+        'realizada: $realizada, '
+        'categoria: $categoria}';
   }
 
   Tarefa copyWith({
@@ -73,6 +81,7 @@ class Tarefa implements Model {
     DateTime? dataPrevista,
     bool? importante,
     bool? realizada,
+    Categoria? categoria,
   }) {
     final t = Tarefa(
       titulo: titulo ?? this.titulo,
@@ -80,6 +89,7 @@ class Tarefa implements Model {
       dataPrevista: dataPrevista ?? this.dataPrevista,
       importante: importante ?? this.importante,
       realizada: realizada ?? this.realizada,
+      categoria: categoria ?? this.categoria,
     );
     final resolvedId = id ?? this.id;
     if (resolvedId != null) t.id = resolvedId;

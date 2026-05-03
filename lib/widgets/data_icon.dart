@@ -10,9 +10,9 @@ class DataPrevistaIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.calendar_today, size: 12, color: const Color.fromARGB(255, 158, 158, 158)),
+        Icon(Icons.calendar_today, size: 14, color: Colors.blueGrey[400]),
         const SizedBox(width: 4),
-        Text(DateFormat('dd.MM.yyyy').format(dataPrevista), style: TextStyle(color: Colors.grey, fontSize: 12)),
+        Text(DateFormat('dd.MM.yyyy').format(dataPrevista), style: TextStyle(color: Colors.blueGrey[500], fontSize: 12)),
       ],
     );
   }

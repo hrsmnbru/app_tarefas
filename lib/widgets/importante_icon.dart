@@ -14,7 +14,7 @@ class ImportanteIcon extends StatelessWidget {
       icon: Icon(
         tarefa.importante ? Icons.error_rounded : Icons.error_rounded,
         //color: tarefa.importante ? Colors.red : Colors.grey,
-        color: Colors.red,
+        color: Theme.of(context).colorScheme.error,
       ),
       onPressed: onToggle,
       );
