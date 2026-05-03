@@ -1,19 +1,19 @@
 import 'package:app_tarefas/models/tarefa.dart';
 import 'package:flutter/material.dart';
 
-class TarefaForm extends StatefulWidget{
+class TarefaForm extends StatefulWidget {
   final Tarefa? tarefaInicial;
   final void Function(Tarefa tarefa) onSalvar;
 
   const TarefaForm({super.key, this.tarefaInicial, required this.onSalvar});
-  
+
   @override
   State<StatefulWidget> createState() {
     return _TarefaFormState();
   }
 }
 
-class _TarefaFormState extends State<TarefaForm>{
+class _TarefaFormState extends State<TarefaForm> {
   final _formKey = GlobalKey<FormState>();
 
   late String _titulo = '';
@@ -22,7 +22,7 @@ class _TarefaFormState extends State<TarefaForm>{
   bool _importante = false;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
     _titulo = widget.tarefaInicial?.titulo ?? '';
@@ -31,8 +31,8 @@ class _TarefaFormState extends State<TarefaForm>{
     _importante = widget.tarefaInicial?.importante ?? false;
   }
 
-  void _salvarForm(){
-    if(!_formKey.currentState!.validate()){
+  void _salvarForm() {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
 
@@ -44,7 +44,7 @@ class _TarefaFormState extends State<TarefaForm>{
       descricao: _descricao,
       dataPrevista: _dataPrevista,
       importante: _importante,
-      realizada: widget.tarefaInicial?.realizada ?? false
+      realizada: widget.tarefaInicial?.realizada ?? false,
     );
 
     widget.onSalvar(tarefa);
@@ -66,42 +66,49 @@ class _TarefaFormState extends State<TarefaForm>{
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
     return Form(
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
-            initialValue: _titulo,
-            decoration: const InputDecoration(
-              labelText: 'Título',
-              border: OutlineInputBorder(), 
-            ),
-            validator: (value){ 
-            if(value == null || value.trim().isEmpty){
-              return 'Informe o título da tarefa';
-            } return null;
-            },
-            onSaved: (value){
-              _titulo = value!;
-            },
-            ),
 
-            TextFormField(
-              initialValue: _descricao,
-              decoration: const InputDecoration(
-                labelText: 'Descrição',
-                border: OutlineInputBorder(), 
-              ),
-              maxLines: 3,
-              onSaved: (value){
-                _descricao = value ?? '';
-              },
-            ),
+          //ajuste para mandar o botão salvar pro pé da página
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextFormField(
+                    initialValue: _titulo,
+                    decoration: const InputDecoration(
+                      labelText: 'Título',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Informe o título da tarefa';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _titulo = value!;
+                    },
+                  ),
 
-            /*TextFormField(
+                  TextFormField(
+                    initialValue: _descricao,
+                    decoration: const InputDecoration(
+                      labelText: 'Descrição',
+                      border: OutlineInputBorder(),
+                    ),
+                    maxLines: 3,
+                    onSaved: (value) {
+                      _descricao = value ?? '';
+                    },
+                  ),
+
+                  /*TextFormField(
               //initialValue: _dataPrevista.toIso8601String().substring(0,10), //SUBSTITUIÇÃO POR API SHOWDATEPICKER
               groupId: ListTile(
                 title: const Text('Data Prevista'),
@@ -117,37 +124,42 @@ class _TarefaFormState extends State<TarefaForm>{
                 _dataPrevista = DateTime.parse(value!);
               },
             ),*/
+                  ListTile(
+                    title: const Text('Data Prevista'),
+                    subtitle: Text(
+                      '${_dataPrevista.day}/${_dataPrevista.month}/${_dataPrevista.year}',
+                    ),
+                    trailing: const Icon(Icons.calendar_today),
+                    onTap: () => _selecionarData(context),
+                  ),
 
-            ListTile(
-              title: const Text('Data Prevista'),
-              subtitle: Text('${_dataPrevista.day}/${_dataPrevista.month}/${_dataPrevista.year}'),
-              trailing: const Icon(Icons.calendar_today),
-              onTap: () => _selecionarData(context),
+                  SwitchListTile(
+                    title: const Text('Importante'),
+                    value: _importante,
+                    onChanged: (value) {
+                      setState(() {
+                        _importante = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
+          ),
 
-            SwitchListTile(
-              title: const Text('Importante'),
-              value: _importante, 
-              onChanged: (value){
-                setState(() {
-                  _importante = value;
-                });
-              },
+          const SizedBox(height: 20),
+
+          SizedBox(
+            width: 200,
+            child: ElevatedButton(
+              onPressed: _salvarForm,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: colors.primary,
+                foregroundColor: colors.onPrimary,
+              ),
+              child: const Text('Salvar'),
             ),
-
-            const SizedBox(height: 20),
-
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _salvarForm, 
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colors.primary,
-                  foregroundColor: colors.onPrimary,
-                ),
-                child: const Text('Salvar'),
-              ),  
-            )
+          ),
         ],
       ),
     );

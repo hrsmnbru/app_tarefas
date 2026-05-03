@@ -36,8 +36,28 @@ class TarefaDatabase {
     return db.query(table);
   }
 
+  static Future<void> update(Model model) async {
+    final db = await _getDB();
+    await db.update(
+      model.runtimeType.toString(),
+      model.toMap(),
+      where: 'id = ?',
+      whereArgs: [model.id],
+    );
+  }
+
   static Future<int> delete(String table, int id) async {
     final db = await _getDB();
     return db.delete(table, where: 'id = ?', whereArgs: [id]);
+  }
+
+  static Future<Map<String, dynamic>> getById(String table, int id) async {
+    final db = await _getDB();
+    final result = await db.query(table, where: 'id = ?', whereArgs: [id]);
+    if (result.isNotEmpty) {
+      return result.first;
+    } else {
+      throw Exception('Registro não encontrado');
+    }
   }
 }

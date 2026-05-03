@@ -27,7 +27,7 @@ class Tarefa implements Model {
   @override
   Map<String, dynamic> toMap() {
     return {
-      if(id != null) 'id': id,
+      if (id != null) 'id': id,
       'titulo': titulo,
       'descricao': descricao,
       'dataPrevista': dataPrevista.toIso8601String(),
@@ -63,5 +63,26 @@ class Tarefa implements Model {
         'dataPrevista: $dataPrevista, '
         'importante: $importante, '
         'realizada: $realizada}';
+  }
+
+  Tarefa copyWith({
+    //criado para permitir atualização de tarefa
+    int? id,
+    String? titulo,
+    String? descricao,
+    DateTime? dataPrevista,
+    bool? importante,
+    bool? realizada,
+  }) {
+    final t = Tarefa(
+      titulo: titulo ?? this.titulo,
+      descricao: descricao ?? this.descricao,
+      dataPrevista: dataPrevista ?? this.dataPrevista,
+      importante: importante ?? this.importante,
+      realizada: realizada ?? this.realizada,
+    );
+    final resolvedId = id ?? this.id;
+    if (resolvedId != null) t.id = resolvedId;
+    return t;
   }
 }
