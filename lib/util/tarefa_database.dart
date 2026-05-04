@@ -9,10 +9,10 @@ class TarefaDatabase {
     final arqBD = path.join(databasePath, "tarefas.db");
 
     return sqlite.openDatabase(
-        arqBD,
-        version: 1,
-        onCreate: (db, version) {
-          db.execute('''
+      arqBD,
+      version: 1,
+      onCreate: (db, version) {
+        db.execute('''
             CREATE TABLE Tarefa(
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               titulo TEXT NOT NULL,
@@ -23,8 +23,8 @@ class TarefaDatabase {
               categoria TEXT DEFAULT 'pessoal'
             )
           ''');
-        },
-      );
+      },
+    );
   }
 
   static Future<void> insert(Model model) async {
@@ -39,6 +39,8 @@ class TarefaDatabase {
 
   static Future<void> update(Model model) async {
     final db = await _getDB();
+    print('update id: ${model.id}');
+    print('update map: ${model.toMap()}');
     await db.update(
       model.runtimeType.toString(),
       model.toMap(),

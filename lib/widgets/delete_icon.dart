@@ -37,7 +37,7 @@ class DeleteIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.remove),
-      color: Theme.of(context).colorScheme.error,
+      color: Theme.of(context).colorScheme.shadow,
       onPressed: onDelete != null ? () => _confirmarDelete(context) : null,
     );
   }

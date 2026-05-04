@@ -20,27 +20,38 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => TarefaProvider(),
       child: MaterialApp(
-
         //para deixar tudo em português
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [
-          Locale('pt', 'BR'),
-        ],
+        supportedLocales: const [Locale('pt', 'BR')],
 
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 0, 77, 107)),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF2E5384),
+            primary: const Color(0xFF2E5384),
+            secondary: const Color(0xFF77A6D3),
+            tertiary: const Color(0xFFC46060),
+            error: const Color(0xFF823939),
+            surface: const Color.fromARGB(255, 249, 249, 249),
+            onSurface: Colors.black87,
+            onPrimary: Colors.white,
+            onSecondary: Colors.white,
+            onError: Colors.white,
+          ),
         ),
         home: TelaTarefas(titulo: 'Lista de Tarefas'),
         routes: {
-          Rotas.telaDetalhes: (context) => const TelaDetalhes(titulo: "Detalhes da Tarefa"),
-          Rotas.telaAdicionar: (context) => const TelaAdicionar(titulo: 'Adicionar Tarefa'),
-          Rotas.telaEditar: (context) => const TelaEditar(titulo: 'Editar Tarefa'),
+          Rotas.telaDetalhes: (context) =>
+              const TelaDetalhes(titulo: "Detalhes da Tarefa"),
+          Rotas.telaAdicionar: (context) =>
+              const TelaAdicionar(titulo: 'Adicionar Tarefa'),
+          Rotas.telaEditar: (context) =>
+              const TelaEditar(titulo: 'Editar Tarefa'),
         },
-    )
+      ),
     );
   }
 }

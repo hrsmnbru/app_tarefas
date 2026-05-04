@@ -21,6 +21,7 @@ class TarefaProvider with ChangeNotifier{
   }
 
   Future<void> editTarefa(Tarefa tarefa) async{
+    print('editando');
     await TarefaDatabase.update(tarefa);
     int index = _tarefas.indexWhere((t) => t.id == tarefa.id);
     if (index != -1) {

@@ -10,7 +10,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TarefaCard extends StatelessWidget {
   final Tarefa tarefa;
-  final VoidCallback onTap; //callback para receber função de clique de acordo com a tela
+  final VoidCallback
+  onTap; //callback para receber função de clique de acordo com a tela
   final VoidCallback? onDelete; //callback opcional, apenas para tela de tarefas
 
   const TarefaCard({
@@ -43,12 +44,13 @@ class TarefaCard extends StatelessWidget {
       ),
 
       child: Card(
+        color: Colors.white,
         clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
         child: Row(
           children: [
             if (tarefa.importante)
-              Container(width: 12, height: 72, color: Theme.of(context).colorScheme.onPrimary)
+              Container(width: 12, height: 72, color: Colors.orangeAccent[100])
             else
               Container(width: 12, height: 72, color: Colors.transparent),
             Expanded(
@@ -57,15 +59,34 @@ class TarefaCard extends StatelessWidget {
                   children: [
                     Text(
                       tarefa.titulo,
-                      style: TextStyle(color: Colors.blueGrey[950], fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        color: colors.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
                 subtitle: Row(
+                  spacing: 16,
                   children: [
-                    Icon(tarefa.categoria.icone, size: 16, color: Colors.blueGrey[400]),
-                    const SizedBox(width: 6),
                     DataPrevistaIcon(dataPrevista: tarefa.dataPrevista),
+                    Row(
+                      children: [
+                        Icon(
+                          tarefa.categoria.icone,
+                          size: 14,
+                          color: colors.secondary,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          tarefa.categoria.label,
+                          style: TextStyle(
+                            color: colors.secondary,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 trailing: Row(

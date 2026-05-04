@@ -36,14 +36,10 @@ class _TarefaFormState extends State<TarefaForm> {
   }
 
   void _salvarForm() {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
+    if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
 
     final tarefa = Tarefa(
-      id: widget.tarefaInicial?.id,
       titulo: _titulo,
       descricao: _descricao,
       dataPrevista: _dataPrevista,
@@ -52,10 +48,12 @@ class _TarefaFormState extends State<TarefaForm> {
       categoria: _categoria,
     );
 
+    final id = widget.tarefaInicial?.id;
+    if (id != null) tarefa.id = id;
+
     widget.onSalvar(tarefa);
   }
 
-  //método para mostrar o DatePicker
   Future<void> _selecionarData(BuildContext context) async {
     final DateTime? dataSelecionada = await showDatePicker(
       context: context,
@@ -84,7 +82,8 @@ class _TarefaFormState extends State<TarefaForm> {
               child: Column(
                 spacing: 14,
                 children: [
-                  TextFormField( //TITULO
+                  TextFormField(
+                    //TITULO
                     initialValue: _titulo,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     onChanged: (value) => setState(() => _titulo = value),
@@ -158,7 +157,8 @@ class _TarefaFormState extends State<TarefaForm> {
                     },
                   ),
 
-                  TextFormField( //DESCRIÇÃO
+                  TextFormField(
+                    //DESCRIÇÃO
                     initialValue: _descricao,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -189,7 +189,8 @@ class _TarefaFormState extends State<TarefaForm> {
                     },
                   ),
 
-                  ListTile( //DATAPREVISTA
+                  ListTile(
+                    //DATAPREVISTA
                     contentPadding: EdgeInsets.zero,
                     title: const Text('Data Prevista'),
                     subtitle: Text(
@@ -199,7 +200,8 @@ class _TarefaFormState extends State<TarefaForm> {
                     onTap: () => _selecionarData(context),
                   ),
 
-                  SwitchListTile( //ALTERNAR IMPORTANTE
+                  SwitchListTile(
+                    //ALTERNAR IMPORTANTE
                     contentPadding: EdgeInsets.zero,
                     title: const Text('Importante'),
                     value: _importante,
@@ -210,7 +212,8 @@ class _TarefaFormState extends State<TarefaForm> {
                     },
                   ),
 
-                  Wrap( //BOTÕES CATEGORIA
+                  Wrap(
+                    //BOTÕES CATEGORIA
                     spacing: 8,
                     children: Categoria.values
                         .map(
@@ -230,7 +233,8 @@ class _TarefaFormState extends State<TarefaForm> {
 
           const SizedBox(height: 20),
 
-          SizedBox( //BOTÃO SALVAR
+          SizedBox(
+            //BOTÃO SALVAR
             width: 200,
             child: ElevatedButton(
               onPressed: _salvarForm,
