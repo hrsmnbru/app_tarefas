@@ -27,17 +27,36 @@ class TelaDetalhes extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 12,
           children: [
-            Center(
-              child: Text(
-                tarefa.titulo,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize:
+                  MainAxisSize.min,
+              children: [
+                Container(
+                  width: 30,
+                  height: 30,
+                  alignment: Alignment.center,
+                  child: Text(
+                    '${tarefa.id ?? '?'}',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
+
+                Text(
+                  tarefa.titulo,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
+
             if (tarefa.descricao.isNotEmpty)
               Container(
                 width: double.infinity,
@@ -46,7 +65,11 @@ class TelaDetalhes extends StatelessWidget {
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text(tarefa.descricao, textAlign: TextAlign.justify, style: TextStyle(fontSize: 14),),
+                child: Text(
+                  tarefa.descricao,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(fontSize: 14),
+                ),
               ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -93,19 +116,17 @@ class TelaDetalhes extends StatelessWidget {
           ],
         ),
       ),
-    
+
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, Rotas.telaEditar, arguments: tarefa.id),
+        onPressed: () => Navigator.pushNamed(
+          context,
+          Rotas.telaEditar,
+          arguments: tarefa.id,
+        ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: const Icon(
-          Icons.edit,
-          size: 30,
-          color: Colors.white,
-          ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        child: const Icon(Icons.edit, size: 30, color: Colors.white),
       ),
     );
   }

@@ -95,4 +95,8 @@ class Tarefa implements Model {
     if (resolvedId != null) t.id = resolvedId;
     return t;
   }
+
+  bool get atrasada{
+    return dataPrevista != null && !realizada && dataPrevista!.isBefore(DateTime.now());
+  }
 }

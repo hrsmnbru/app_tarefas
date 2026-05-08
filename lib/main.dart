@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => TarefaProvider(),
+      create: (context) => TarefaProvider()..init(),
       child: MaterialApp(
         //para deixar tudo em português
         localizationsDelegates: const [

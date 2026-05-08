@@ -1,3 +1,4 @@
+import 'package:app_tarefas/util/tarefas_mock.dart';
 import 'package:flutter/material.dart';
 import 'package:app_tarefas/models/tarefa.dart';  
 import 'package:app_tarefas/util/tarefa_database.dart';
@@ -43,5 +44,25 @@ class TarefaProvider with ChangeNotifier{
   Future<void> toggleImportante(Tarefa tarefa) async{ //para alternar status importante
     final tarefaAtualizada = tarefa.copyWith(importante: !tarefa.importante);
     await editTarefa(tarefaAtualizada);
+  }
+
+  List<Tarefa> get importantes => tarefas.where((t) => t.importante).toList();
+
+  List<Tarefa> get realizadas => tarefas.where((t) => t.realizada).toList();
+
+  List<Tarefa> get atrasadas => tarefas.where((t) => t.atrasada).toList();
+
+  Future<void> init() async{
+    await carregarTarefas();
+
+    //if(_tarefas.isEmpty) await _carregarMock();
+    await _carregarMock();
+    notifyListeners();
+  }
+
+  Future<void> _carregarMock() async{
+    for(final tarefa in tarefasMock){
+      await addTarefa(tarefa);
+    }
   }
 }
