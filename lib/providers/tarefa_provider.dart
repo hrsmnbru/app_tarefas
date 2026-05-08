@@ -6,7 +6,7 @@ import 'package:app_tarefas/util/tarefa_database.dart';
 class TarefaProvider with ChangeNotifier{
   List<Tarefa> _tarefas = [];
 
-  List<Tarefa> get tarefas => _tarefas;
+  List<Tarefa> get tarefas => _tarefas.where((t) => !t.realizada).toList();
   
   Future<void> carregarTarefas() async {
     _tarefas = await TarefaDatabase.list("Tarefa")
@@ -46,17 +46,16 @@ class TarefaProvider with ChangeNotifier{
     await editTarefa(tarefaAtualizada);
   }
 
-  List<Tarefa> get importantes => tarefas.where((t) => t.importante).toList();
+  List<Tarefa> get importantes => _tarefas.where((t) => t.importante && !t.realizada).toList();
 
-  List<Tarefa> get realizadas => tarefas.where((t) => t.realizada).toList();
+  List<Tarefa> get realizadas => _tarefas.where((t) => t.realizada).toList();
 
-  List<Tarefa> get atrasadas => tarefas.where((t) => t.atrasada).toList();
+  List<Tarefa> get atrasadas => _tarefas.where((t) => t.atrasada).toList();
 
   Future<void> init() async{
     await carregarTarefas();
 
-    //if(_tarefas.isEmpty) await _carregarMock();
-    await _carregarMock();
+    if(_tarefas.isEmpty) await _carregarMock();
     notifyListeners();
   }
 

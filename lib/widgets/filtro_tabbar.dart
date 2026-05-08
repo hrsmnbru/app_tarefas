@@ -20,8 +20,8 @@ List<Tarefa> _atrasadas(TarefaProvider p) => p.atrasadas;
 final _filtros = [
   _Filtro(label: 'Todas', getter: _tarefas),
   _Filtro(label: 'Importantes', getter: _importantes),
-  _Filtro(label: 'Realizadas', getter: _realizadas),
   _Filtro(label: 'Atrasadas', getter: _atrasadas),
+  _Filtro(label: 'Realizadas', getter: _realizadas),
 ];
 
 class FiltroTabbar extends StatelessWidget implements PreferredSizeWidget {
