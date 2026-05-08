@@ -29,8 +29,7 @@ class TelaDetalhes extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize:
-                  MainAxisSize.min,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   width: 30,
@@ -117,16 +116,42 @@ class TelaDetalhes extends StatelessWidget {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(
-          context,
-          Rotas.telaEditar,
-          arguments: tarefa.id,
-        ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-        child: const Icon(Icons.edit, size: 30, color: Colors.white),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+
+        children: [
+          FloatingActionButton(
+            onPressed: () => Navigator.pushNamed(
+              context,
+              Rotas.telaEditar,
+              arguments: tarefa.id,
+            ),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: const Icon(Icons.edit, size: 30, color: Colors.white),
+          ),
+
+          const SizedBox(height: 16),
+          FloatingActionButton(
+            onPressed: () {
+              Provider.of<TarefaProvider>(
+                context,
+                listen: false,
+              ).toggleRealizada(tarefa);
+              Navigator.pop(context);
+            },
+            backgroundColor: Colors.lightGreen,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: const Icon(Icons.check, size: 30, color: Colors.white),
+          ),
+        ],
       ),
     );
   }

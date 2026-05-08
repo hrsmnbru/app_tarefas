@@ -65,4 +65,10 @@ class TarefaProvider with ChangeNotifier{
       await addTarefa(tarefa);
     }
   }
+
+  Future<void> toggleRealizada(Tarefa tarefa) async{
+    final TarefaRealizada = tarefa.copyWith(realizada: !tarefa.realizada);
+    await editTarefa(TarefaRealizada);
+    notifyListeners();
+  }
 }

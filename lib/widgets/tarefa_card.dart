@@ -24,6 +24,7 @@ class TarefaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final bool realizada = tarefa.realizada;
 
     return Slidable(
       key: ValueKey(tarefa.id),
@@ -49,10 +50,15 @@ class TarefaCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
         child: Row(
           children: [
-            if (tarefa.importante)
-              Container(width: 12, height: 72, color: Colors.orangeAccent[100])
-            else
-              Container(width: 12, height: 72, color: Colors.transparent),
+            Container(
+              width: 12,
+              height: 72,
+              color: tarefa.importante ? (realizada ? Colors.grey[300] : Colors.orangeAccent[100]) : Colors.transparent,
+            ),
+            // if (tarefa.importante)
+            //   Container(width: 12, height: 72, color: realizada ? Colors.grey : Colors.orangeAccent[100])
+            // else
+            //   Container(width: 12, height: 72, color: Colors.transparent),
             Expanded(
               child: ListTile(
                 title: Row(
@@ -60,7 +66,7 @@ class TarefaCard extends StatelessWidget {
                     Text(
                       tarefa.titulo,
                       style: TextStyle(
-                        color: colors.primary,
+                        color: realizada ? Colors.grey[400] : colors.primary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -69,19 +75,20 @@ class TarefaCard extends StatelessWidget {
                 subtitle: Row(
                   spacing: 16,
                   children: [
-                    DataPrevistaIcon(dataPrevista: tarefa.dataPrevista),
+                    DataPrevistaIcon(dataPrevista: tarefa.dataPrevista, color: realizada ? Colors.grey[400] : null),
+                    
                     Row(
                       children: [
                         Icon(
                           tarefa.categoria.icone,
                           size: 14,
-                          color: colors.secondary,
+                          color: realizada ? Colors.grey[400] : colors.secondary,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           tarefa.categoria.label,
                           style: TextStyle(
-                            color: colors.secondary,
+                            color: realizada ? Colors.grey[400] : colors.secondary,
                             fontSize: 12,
                           ),
                         ),
