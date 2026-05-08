@@ -1,5 +1,6 @@
 import 'package:app_tarefas/util/rotas.dart';
 import 'package:app_tarefas/providers/tarefa_provider.dart';
+import 'package:app_tarefas/views/tela_inicial.dart';
 import 'package:app_tarefas/views/tela_tarefas.dart';
 import 'package:app_tarefas/views/tela_detalhes.dart';
 import 'package:app_tarefas/views/tela_adicionar.dart';
@@ -42,8 +43,10 @@ class MyApp extends StatelessWidget {
             onError: Colors.white,
           ),
         ),
-        home: TelaTarefas(titulo: 'Lista de Tarefas'),
+        home: TelaInicial(),
         routes: {
+          Rotas.telaTarefas: (context) =>
+              const TelaTarefas(titulo: 'Lista de Tarefas'),
           Rotas.telaDetalhes: (context) =>
               const TelaDetalhes(titulo: "Detalhes da Tarefa"),
           Rotas.telaAdicionar: (context) =>

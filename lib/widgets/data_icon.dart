@@ -13,6 +13,7 @@ class DataPrevistaIcon extends StatelessWidget {
     final corpadrao = color ?? Theme.of(context).colorScheme.tertiary;
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(Icons.calendar_today, size: 14, color: corpadrao),
         const SizedBox(width: 4),

@@ -12,7 +12,6 @@ class TelaTarefas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<TarefaProvider>(context);
-    //var tarefas = provider.tarefas;
 
     return DefaultTabController(
       length: filtroTabbarLength,
@@ -25,27 +24,6 @@ class TelaTarefas extends StatelessWidget {
         ),
 
         body: FiltroTabbarView(provider: provider),
-        
-
-        /*body: SlidableAutoCloseBehavior(
-          child: tarefas.isEmpty
-              ? const Center(child: Text('Nenhuma tarefa encontrada.'))
-              : ListView.builder(
-                  itemCount: provider.tarefas.length,
-                  itemBuilder: (context, index) {
-                    final tarefa = provider.tarefas[index];
-                    return TarefaCard(
-                      tarefa: tarefa,
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        Rotas.telaDetalhes,
-                        arguments: tarefa.id,
-                      ),
-                      onDelete: () => provider.removeTarefa(tarefa.id!),
-                    );
-                  },
-                ),
-        ),*/
 
         floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.pushNamed(context, Rotas.telaAdicionar),
